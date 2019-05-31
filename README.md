@@ -1,0 +1,1 @@
+# opensuse-stemcell-deploy-on-openstack
