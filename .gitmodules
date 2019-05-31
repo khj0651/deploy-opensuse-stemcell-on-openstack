@@ -1,0 +1,3 @@
+[submodule "suse-openstack-stemcell"]
+	path = suse-openstack-stemcell
+	url = https://github.com/khj0651/suse-openstack-stemcell

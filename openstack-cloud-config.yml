@@ -1,0 +1,67 @@
+vm_types:
+- name: minimal
+  cloud_properties:
+    instance_type: m1.small
+- name: small
+  cloud_properties:
+    instance_type: m1.small
+- name: small-highmem
+  cloud_properties:
+    instance_type: m1.medium
+- name: large
+  cloud_properties:
+    instance_type: m1.large-memory
+- name: small-50GB-ephemeral-disk
+  cloud_properties:
+    instance_type: m1.medium
+- name: small-highmem-100GB-ephemeral-disk
+  cloud_properties:
+    instance_type: m1.large
+
+disk_types:
+- name: 5GB
+  disk_size: 5000
+- name: 10GB
+  disk_size: 10000
+- name: 100GB
+  disk_size: 100000
+
+vm_extensions:
+- disk_size: 50000
+  name: 50GB_ephemeral_disk
+- disk_size: 100000
+  name: 100GB_ephemeral_disk
+- name: cf-tcp-router-network-properties
+- name: cf-haproxy-network-properties
+  cloud_properties: {}
+- name: cf-router-network-properties
+- name: diego-ssh-proxy-network-properties
+
+azs:
+- name: z1
+- name: z2
+- name: z3
+
+networks:
+- name: floating
+  type: vip
+
+- name: default
+  type: manual
+  subnets:
+  - azs: [z1, z2, z3]
+    range: 10.0.200.0/24
+    reserved: [10.0.200.1-10.0.200.13]
+    static: [10.0.200.16-10.0.200.50]
+    dns: [10.0.200.10]
+    gateway: 10.0.200.1
+    cloud_properties:
+      net_id: a7e2912a-9c29-412b-8879-76704d3ad74d
+      security_groups: [bosh]
+
+compilation:
+  workers: 5
+  reuse_compilation_vms: true
+  vm_type: minimal
+  network: default
+  az: z1
